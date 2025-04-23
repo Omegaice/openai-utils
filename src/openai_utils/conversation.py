@@ -3,7 +3,7 @@ from contextlib import AbstractContextManager
 from dataclasses import dataclass, field
 
 from openai import NOT_GIVEN, NotGiven, OpenAI
-from openai.types.responses import ResponseTextConfigParam
+from openai.types.responses import Response, ResponseTextConfigParam
 
 from openai_utils.models import Model
 
@@ -12,11 +12,15 @@ logger = logging.getLogger(__name__)
 
 class ConversationManager:
     def __init__(self, client: OpenAI | None = None, model: Model = Model.GPT_4_1_MINI):
+        """Initialize the conversation manager"""
+
         self.client = client if client is not None else OpenAI()
         self.model = model
         self.total_cost = 0.0
 
     def new_conversation(self, instructions: str | None = None) -> "Conversation":
+        """Create a new conversation"""
+
         return Conversation(model=self.model, client=self.client, manager=self, instructions=instructions)
 
     def add_cost(self, cost: float):
@@ -39,12 +43,9 @@ class Conversation(AbstractContextManager):
     cached_tokens: int = field(init=False, default=0)
     output_tokens: int = field(init=False, default=0)
 
-    def with_instructions(self, instructions: str) -> "Conversation":
-        self.instructions = instructions
-        self.previous_response_id = NOT_GIVEN  # Reset conversation
-        return self
-
     def ask(self, input_text: str, format: ResponseTextConfigParam | None = None) -> str:
+        """Send a new message to the conversation"""
+
         # If we have a previous response, we don't need to provide instructions
         with_instructions = self.instructions if self.previous_response_id is NOT_GIVEN else NOT_GIVEN
 
@@ -61,20 +62,7 @@ class Conversation(AbstractContextManager):
         )
 
         # Update token counts
-        if response.usage is not None:
-            self.input_tokens += response.usage.input_tokens
-            self.cached_tokens += response.usage.input_tokens_details.cached_tokens
-            self.output_tokens += response.usage.output_tokens
-
-            # Update total cost
-            cost = self.model.cost(
-                input_tokens=self.input_tokens, cached_tokens=self.cached_tokens, output_tokens=self.output_tokens
-            )
-            self.total_cost += cost
-
-            logger.debug(
-                f"Conversation message cost=${cost:.6f} input={self.input_tokens} cached={self.cached_tokens} output={self.output_tokens}"
-            )
+        self._update_usage(response)
 
         # Update the previous response ID
         self.previous_response_id = response.id
@@ -82,11 +70,36 @@ class Conversation(AbstractContextManager):
         # Return the output text
         return response.output_text
 
+    def _update_usage(self, response: Response):
+        """Update the token counts and total cost for the message."""
+
+        if response.usage is None:
+            return
+
+        # Update token counts
+        self.input_tokens += response.usage.input_tokens
+        self.cached_tokens += response.usage.input_tokens_details.cached_tokens
+        self.output_tokens += response.usage.output_tokens
+
+        # Update total cost
+        cost = self.model.cost(
+            input_tokens=self.input_tokens, cached_tokens=self.cached_tokens, output_tokens=self.output_tokens
+        )
+        self.total_cost += cost
+
+        # Log the cost for the message
+        logger.debug(
+            f"Conversation message cost=${cost:.6f} input={self.input_tokens} cached={self.cached_tokens} output={self.output_tokens}"
+        )
+
+    # Context Manager Methods
     def __enter__(self):
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
+        """When we exit the context manager, we add the total cost to the manager if there is one and log the total cost."""
         if self.manager is not None:
             self.manager.add_cost(self.total_cost)
 
+        # Log the total cost for the conversation
         logger.info(f"Conversation total cost: ${self.total_cost:.6f}")
