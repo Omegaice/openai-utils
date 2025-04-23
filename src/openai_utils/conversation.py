@@ -1,0 +1,92 @@
+import logging
+from contextlib import AbstractContextManager
+from dataclasses import dataclass, field
+
+from openai import NOT_GIVEN, NotGiven, OpenAI
+from openai.types.responses import ResponseTextConfigParam
+
+from openai_utils.models import Model
+
+logger = logging.getLogger(__name__)
+
+
+class ConversationManager:
+    def __init__(self, client: OpenAI | None = None, model: Model = Model.GPT_4_1_MINI):
+        self.client = client if client is not None else OpenAI()
+        self.model = model
+        self.total_cost = 0.0
+
+    def new_conversation(self, instructions: str | None = None) -> "Conversation":
+        return Conversation(model=self.model, client=self.client, manager=self, instructions=instructions)
+
+    def add_cost(self, cost: float):
+        self.total_cost += cost
+
+
+@dataclass(kw_only=True)
+class Conversation(AbstractContextManager):
+    client: OpenAI
+    model: Model
+    instructions: str | None = None
+    manager: ConversationManager | None = None
+
+    # State Data
+    previous_response_id: str | NotGiven = field(init=False, default=NOT_GIVEN)
+    total_cost: float = field(init=False, default=0.0)
+
+    # Usage
+    input_tokens: int = field(init=False, default=0)
+    cached_tokens: int = field(init=False, default=0)
+    output_tokens: int = field(init=False, default=0)
+
+    def with_instructions(self, instructions: str) -> "Conversation":
+        self.instructions = instructions
+        self.previous_response_id = NOT_GIVEN  # Reset conversation
+        return self
+
+    def ask(self, input_text: str, format: ResponseTextConfigParam | None = None) -> str:
+        # If we have a previous response, we don't need to provide instructions
+        with_instructions = self.instructions if self.previous_response_id is NOT_GIVEN else NOT_GIVEN
+
+        # If we have a format, we need to add it to the request
+        with_format = format if format is not None else NOT_GIVEN
+
+        # Send the request to OpenAI
+        response = self.client.responses.create(
+            model=self.model,
+            input=input_text,
+            instructions=with_instructions,
+            previous_response_id=self.previous_response_id,
+            text=with_format,
+        )
+
+        # Update token counts
+        if response.usage is not None:
+            self.input_tokens += response.usage.input_tokens
+            self.cached_tokens += response.usage.input_tokens_details.cached_tokens
+            self.output_tokens += response.usage.output_tokens
+
+            # Update total cost
+            cost = self.model.cost(
+                input_tokens=self.input_tokens, cached_tokens=self.cached_tokens, output_tokens=self.output_tokens
+            )
+            self.total_cost += cost
+
+            logger.debug(
+                f"Conversation message cost=${cost:.6f} input={self.input_tokens} cached={self.cached_tokens} output={self.output_tokens}"
+            )
+
+        # Update the previous response ID
+        self.previous_response_id = response.id
+
+        # Return the output text
+        return response.output_text
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        if self.manager is not None:
+            self.manager.add_cost(self.total_cost)
+
+        logger.info(f"Conversation total cost: ${self.total_cost:.6f}")
