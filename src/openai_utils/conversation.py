@@ -1,9 +1,10 @@
 import logging
 from contextlib import AbstractContextManager
 from dataclasses import dataclass, field
+from typing import TypeVar
 
 from openai import NOT_GIVEN, NotGiven, OpenAI
-from openai.types.responses import Response, ResponseTextConfigParam
+from openai.types.responses import Response
 
 from openai_utils.models import Model
 
@@ -18,7 +19,7 @@ class ConversationManager:
         self.model = model
         self.total_cost = 0.0
 
-    def new_conversation(self, instructions: str | None = None) -> "Conversation":
+    def new_conversation(self, instructions: str | NotGiven = NOT_GIVEN) -> "Conversation":
         """Create a new conversation"""
 
         return Conversation(model=self.model, client=self.client, manager=self, instructions=instructions)
@@ -27,11 +28,14 @@ class ConversationManager:
         self.total_cost += cost
 
 
+T = TypeVar("T")
+
+
 @dataclass(kw_only=True)
 class Conversation(AbstractContextManager):
     client: OpenAI
     model: Model
-    instructions: str | None = None
+    instructions: str | NotGiven = NOT_GIVEN
     manager: ConversationManager | None = None
 
     # State Data
@@ -43,22 +47,25 @@ class Conversation(AbstractContextManager):
     cached_tokens: int = field(init=False, default=0)
     output_tokens: int = field(init=False, default=0)
 
-    def ask(self, input_text: str, format: ResponseTextConfigParam | None = None) -> str:
+    def ask(self, input_text: str, format: type[T] | None = None) -> T | str | None:
         """Send a new message to the conversation"""
 
         # If we have a previous response, we don't need to provide instructions
         with_instructions = self.instructions if self.previous_response_id is NOT_GIVEN else NOT_GIVEN
 
-        # If we have a format, we need to add it to the request
-        with_format = format if format is not None else NOT_GIVEN
+        if format is None:
+            return self._ask_without_format(input_text, with_instructions)
+        else:
+            return self._ask_with_format(input_text, format, with_instructions)
 
+    def _ask_without_format(self, input_text: str, with_instructions: str | NotGiven = NOT_GIVEN) -> str:
+        """Send a new message to the conversation without a format"""
         # Send the request to OpenAI
         response = self.client.responses.create(
             model=self.model,
             input=input_text,
             instructions=with_instructions,
             previous_response_id=self.previous_response_id,
-            text=with_format,
         )
 
         # Update token counts
@@ -67,8 +74,29 @@ class Conversation(AbstractContextManager):
         # Update the previous response ID
         self.previous_response_id = response.id
 
-        # Return the output text
         return response.output_text
+
+    def _ask_with_format(
+        self, input_text: str, format: type[T], with_instructions: str | NotGiven = NOT_GIVEN
+    ) -> T | None:
+        """Send a new message to the conversation with a format"""
+
+        # Send the request to OpenAI
+        response = self.client.responses.parse(
+            model=self.model,
+            input=input_text,
+            instructions=with_instructions,
+            previous_response_id=self.previous_response_id,
+            text_format=format,
+        )
+
+        # Update token counts
+        self._update_usage(response)
+
+        # Update the previous response ID
+        self.previous_response_id = response.id
+
+        return response.output_parsed
 
     def _update_usage(self, response: Response):
         """Update the token counts and total cost for the message."""
