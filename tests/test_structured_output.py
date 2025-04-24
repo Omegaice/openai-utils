@@ -1,10 +1,12 @@
 from openai import OpenAI
 from pydantic import BaseModel
+import pytest
 
 from openai_utils.conversation import Conversation
 from openai_utils.models import Model
 
 
+@pytest.mark.vcr
 def test_structured_output():
     class User(BaseModel):
         name: str
