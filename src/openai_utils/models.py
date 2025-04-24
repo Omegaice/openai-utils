@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from enum import StrEnum
+from typing import Self
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -24,7 +25,7 @@ class Model(StrEnum):
     and each member also gets a `.cost: ModelCost` attribute.
     """
 
-    def __new__(cls, value: str, input_cost: float, cached_cost: float, output_cost: float):
+    def __new__(cls, value: str, input_cost: float, cached_cost: float, output_cost: float) -> Self:
         obj = str.__new__(cls, value)
         obj._value_ = value
         object.__setattr__(obj, "cost", ModelCost(input=input_cost, cached=cached_cost, output=output_cost))

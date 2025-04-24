@@ -1,7 +1,9 @@
+import atexit
 import logging
 from contextlib import AbstractContextManager
 from dataclasses import dataclass, field
-from typing import TypeVar
+from typing import Self, cast
+from typing_extensions import TypeVar, overload
 
 from openai import NOT_GIVEN, NotGiven, OpenAI
 from openai.types.responses import Response
@@ -12,23 +14,33 @@ logger = logging.getLogger(__name__)
 
 
 class ConversationManager:
-    def __init__(self, client: OpenAI | None = None, model: Model = Model.GPT_4_1_MINI):
+    def __init__(self, client: OpenAI | None = None, model: Model = Model.GPT_4_1_MINI, log_on_exit: bool = True):
         """Initialize the conversation manager"""
 
         self.client = client if client is not None else OpenAI()
         self.model = model
         self.total_cost = 0.0
 
+        if log_on_exit:
+            self.register_exit_handler()
+
+    def register_exit_handler(self) -> None:
+        def log_on_exit() -> None:
+            print("Logging on exit")
+            logger.info(f"Conversation total cost: ${self.total_cost:.6f}")
+
+        atexit.register(log_on_exit)
+
     def new_conversation(self, instructions: str | NotGiven = NOT_GIVEN) -> "Conversation":
         """Create a new conversation"""
 
         return Conversation(model=self.model, client=self.client, manager=self, instructions=instructions)
 
-    def add_cost(self, cost: float):
+    def add_cost(self, cost: float) -> None:
         self.total_cost += cost
 
 
-T = TypeVar("T")
+T = TypeVar("T", default=str)
 
 
 @dataclass(kw_only=True)
@@ -47,14 +59,20 @@ class Conversation(AbstractContextManager):
     cached_tokens: int = field(init=False, default=0)
     output_tokens: int = field(init=False, default=0)
 
-    def ask(self, input_text: str, format: type[T] | None = None) -> T | str | None:
+    @overload
+    def ask(self, input_text: str, format: None = None) -> str | None: ...
+
+    @overload
+    def ask(self, input_text: str, format: type[T]) -> T | None: ...
+
+    def ask(self, input_text: str, format: type[T] | None = None) -> T | None:
         """Send a new message to the conversation"""
 
         # If we have a previous response, we don't need to provide instructions
         with_instructions = self.instructions if self.previous_response_id is NOT_GIVEN else NOT_GIVEN
 
         if format is None:
-            return self._ask_without_format(input_text, with_instructions)
+            return cast(T, self._ask_without_format(input_text, with_instructions))
         else:
             return self._ask_with_format(input_text, format, with_instructions)
 
@@ -98,7 +116,7 @@ class Conversation(AbstractContextManager):
 
         return response.output_parsed
 
-    def _update_usage(self, response: Response):
+    def _update_usage(self, response: Response) -> None:
         """Update the token counts and total cost for the message."""
 
         if response.usage is None:
@@ -121,10 +139,10 @@ class Conversation(AbstractContextManager):
         )
 
     # Context Manager Methods
-    def __enter__(self):
+    def __enter__(self) -> Self:
         return self
 
-    def __exit__(self, exc_type, exc_value, traceback):
+    def __exit__(self, exc_type, exc_value, traceback) -> None:
         """When we exit the context manager, we add the total cost to the manager if there is one and log the total cost."""
         if self.manager is not None:
             self.manager.add_cost(self.total_cost)
