@@ -10,6 +10,7 @@ requires-python = ">=3.11"
 dependencies = [
     "openai>=1.75.0",
 ]
+classifiers = ["Private :: Do Not Upload"]
 
 [build-system]
 requires = ["hatchling"]
