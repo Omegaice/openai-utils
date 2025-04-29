@@ -3,12 +3,13 @@ import logging
 from contextlib import AbstractContextManager
 from dataclasses import dataclass, field
 from typing import Self, cast
-from typing_extensions import TypeVar, overload
 
 from openai import NOT_GIVEN, NotGiven, OpenAI
 from openai.types.responses import Response
+from typing_extensions import TypeVar, overload
 
 from openai_utils.models import Model
+from openai_utils.tool import Tool
 
 logger = logging.getLogger(__name__)
 
@@ -58,6 +59,13 @@ class Conversation(AbstractContextManager):
     input_tokens: int = field(init=False, default=0)
     cached_tokens: int = field(init=False, default=0)
     output_tokens: int = field(init=False, default=0)
+
+    # Tools
+    tools: list[Tool] = field(default_factory=list)
+
+    def register_tool(self, tool: Tool) -> None:
+        """Register a tool with the conversation"""
+        self.tools.append(tool)
 
     @overload
     def ask(self, input_text: str, format: None = None) -> str | None: ...
