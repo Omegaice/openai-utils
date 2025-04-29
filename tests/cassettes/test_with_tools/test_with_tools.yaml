@@ -1,0 +1,61 @@
+interactions:
+- request:
+    body: '{"input":"What''s the weather like in Paris today?","model":"gpt-4o-mini"}'
+    headers:
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-length:
+      - '73'
+      content-type:
+      - application/json
+      host:
+      - api.openai.com
+      user-agent:
+      - OpenAI/Python 1.75.0
+    method: POST
+    uri: https://api.openai.com/v1/responses
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA3RUy27jMAy85ysIXfbSFFaiJE4+YIHe9l4sDEamE21lyZCoPlDk3xeWHTvZbS+G
+        zSFHwyHlzwWAMLU4gAgUu2pbSllIuVblrizlXu4bhXqNuFvrmmQji2N51MVGykIp2aijeOgJ/PEP
+        ab6SeBdpiOtAyFRX2GNypzZ7pcqNzFhk5BT7Gu3bzhJTPRRRCD6IA7hkbQ4Yd82oamI0Nt6jkUPS
+        bLy7i7f4XvnEXeKK/Qv9A/qabH/2qeOl8svWOLNcFSu1LHZLWY5d5WpxgOcFAMBnfk52tfF0dUtt
+        1Vr1bmG52q5q1ZR7ud6sqf7SrczBHx1lFooRTzQD39mSQe0dk5sl3cq6o702Tu88VecEdM4zXs16
+        /n0H5vQDiCfQ6H4wdMG/mpogENolm5bgjZDPFCB1NTLFR/jpA/CZwPafPOHGwS8MJj7AEwTSvm3J
+        1aDPpF+MOwFCIGvwaGfGNzpGwwQ+AHbdo5h0Xca3SaoI3uYmMUYTGR0PyX1iThIdBrSWbMXe20qj
+        zRvDIdEAB3o1PsXquqxVnui0HIEwemfcSRxGdwU1jQ98k9RPKrUtho8xuAC4DHtN4dVoqthQv8Wi
+        pgaTHcYgIvtAt1qY2o4Ccsph+ViM0TyI8fDGhxbn75sx57yp+eH8oeezN3owKbEXEzAPXbDvqu72
+        zJCczpuRVZvYj2e8kinv6CTIuLtbJTcP/8dvruokW6M+Uz0XFoP0sfrfy7rafgV8xTsN7Dtq9ox2
+        BpWc3EqR7v41LTHWyNjTXxaXvwAAAP//AwBeZO2zHwUAAA==
+    headers:
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 29 Apr 2025 16:40:52 GMT
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      X-Content-Type-Options:
+      - nosniff
+      alt-svc:
+      - h3=":443"; ma=86400
+      openai-processing-ms:
+      - '1561'
+      openai-version:
+      - '2020-10-01'
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+    status:
+      code: 200
+      message: OK
+version: 1
