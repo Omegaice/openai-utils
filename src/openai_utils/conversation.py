@@ -2,6 +2,7 @@ import atexit
 import logging
 from contextlib import AbstractContextManager
 from dataclasses import dataclass, field
+from types import TracebackType
 from typing import Self, cast
 
 from openai import NOT_GIVEN, NotGiven, OpenAI
@@ -52,7 +53,7 @@ T = TypeVar("T")
 
 
 @dataclass(kw_only=True)
-class Conversation(AbstractContextManager):
+class Conversation(AbstractContextManager["Conversation"]):
     client: OpenAI
     model: Model
     instructions: str | NotGiven = NOT_GIVEN
@@ -144,7 +145,9 @@ class Conversation(AbstractContextManager):
     def __enter__(self) -> Self:
         return self
 
-    def __exit__(self, exc_type, exc_value, traceback) -> None:
+    def __exit__(
+        self, exc_type: type[BaseException] | None, exc_value: BaseException | None, traceback: TracebackType | None
+    ) -> None:
         """When we exit the context manager, we add the total cost to the manager if there is one and log the total cost."""
         if self.manager is not None:
             self.manager.add_cost(self.total_cost)
