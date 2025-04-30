@@ -34,3 +34,12 @@ test = [
 
 [tool.ruff]
 line-length = 120
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+ignore_missing_imports = true
+show_error_codes = true
+pretty = true
+plugins = []
+exclude = "tests/.*"
