@@ -7,9 +7,17 @@ from typing import Self, cast
 from openai import NOT_GIVEN, NotGiven, OpenAI
 from openai.types.responses import Response
 from typing_extensions import TypeVar, overload
+from openai.types.responses import (
+    ResponseFunctionToolCall,
+    ResponseFunctionToolCallParam,
+    ParsedResponseOutputMessage,
+    ParsedResponseOutputText,
+)
+from openai.types.responses.response_input_param import ResponseInputItemParam
+from openai.types.responses.easy_input_message_param import EasyInputMessageParam
 
 from openai_utils.models import Model
-from openai_utils.tool import Tool
+from openai_utils.tool_registry import ToolRegistry
 
 logger = logging.getLogger(__name__)
 
@@ -27,7 +35,6 @@ class ConversationManager:
 
     def register_exit_handler(self) -> None:
         def log_on_exit() -> None:
-            print("Logging on exit")
             logger.info(f"Conversation total cost: ${self.total_cost:.6f}")
 
         atexit.register(log_on_exit)
@@ -41,7 +48,7 @@ class ConversationManager:
         self.total_cost += cost
 
 
-T = TypeVar("T", default=str)
+T = TypeVar("T")
 
 
 @dataclass(kw_only=True)
@@ -50,6 +57,7 @@ class Conversation(AbstractContextManager):
     model: Model
     instructions: str | NotGiven = NOT_GIVEN
     manager: ConversationManager | None = None
+    tools: ToolRegistry = field(default_factory=ToolRegistry)
 
     # State Data
     previous_response_id: str | NotGiven = field(init=False, default=NOT_GIVEN)
@@ -60,69 +68,55 @@ class Conversation(AbstractContextManager):
     cached_tokens: int = field(init=False, default=0)
     output_tokens: int = field(init=False, default=0)
 
-    # Tools
-    tools: list[Tool] = field(default_factory=list)
-
-    def register_tool(self, tool: Tool) -> None:
-        """Register a tool with the conversation"""
-        self.tools.append(tool)
-
     @overload
-    def ask(self, input_text: str, format: None = None) -> str | None: ...
+    def ask(self, input_text: str, format: NotGiven = NOT_GIVEN) -> str | None: ...
 
     @overload
     def ask(self, input_text: str, format: type[T]) -> T | None: ...
 
-    def ask(self, input_text: str, format: type[T] | None = None) -> T | None:
-        """Send a new message to the conversation"""
+    def ask(self, input_text: str, format: type[T] | NotGiven = NOT_GIVEN) -> T | None:
+        """Send a new message to the conversation, supporting multi-turn tool-calling (no structured formatting)."""
+        input_messages: list[ResponseInputItemParam] = []
+        input_messages.append(EasyInputMessageParam(role="user", content=input_text))
 
-        # If we have a previous response, we don't need to provide instructions
-        with_instructions = self.instructions if self.previous_response_id is NOT_GIVEN else NOT_GIVEN
+        while True:
+            response = self.client.responses.parse(
+                model=self.model.value,
+                tools=self.tools.schema(),
+                text_format=format,
+                input=input_messages,
+            )
 
-        if format is None:
-            return cast(T, self._ask_without_format(input_text, with_instructions))
-        else:
-            return self._ask_with_format(input_text, format, with_instructions)
+            self._update_usage(response)
 
-    def _ask_without_format(self, input_text: str, with_instructions: str | NotGiven = NOT_GIVEN) -> str:
-        """Send a new message to the conversation without a format"""
-        # Send the request to OpenAI
-        response = self.client.responses.create(
-            model=self.model,
-            input=input_text,
-            instructions=with_instructions,
-            previous_response_id=self.previous_response_id,
-        )
+            if response.output is None:
+                raise ValueError("No output from the model")
 
-        # Update token counts
-        self._update_usage(response)
+            # Get the latest output
+            last_output = response.output[-1]
 
-        # Update the previous response ID
-        self.previous_response_id = response.id
+            # Handle tool calls
+            if isinstance(last_output, ResponseFunctionToolCall):
+                tool_call: ResponseFunctionToolCallParam = {
+                    "type": "function_call",
+                    "call_id": last_output.call_id,
+                    "name": last_output.name,
+                    "arguments": last_output.arguments,
+                }
+                input_messages.append(tool_call)
 
-        return response.output_text
+                input_messages.append(self.tools[last_output.name](last_output.call_id, last_output.arguments))
 
-    def _ask_with_format(
-        self, input_text: str, format: type[T], with_instructions: str | NotGiven = NOT_GIVEN
-    ) -> T | None:
-        """Send a new message to the conversation with a format"""
-
-        # Send the request to OpenAI
-        response = self.client.responses.parse(
-            model=self.model,
-            input=input_text,
-            instructions=with_instructions,
-            previous_response_id=self.previous_response_id,
-            text_format=format,
-        )
-
-        # Update token counts
-        self._update_usage(response)
-
-        # Update the previous response ID
-        self.previous_response_id = response.id
-
-        return response.output_parsed
+            # Handle result
+            if isinstance(last_output, ParsedResponseOutputMessage):
+                content = last_output.content[0]
+                if isinstance(content, ParsedResponseOutputText):
+                    if format is NOT_GIVEN:
+                        return cast(T, content.text)
+                    else:
+                        return cast(T, content.parsed)
+                else:
+                    raise ValueError(f"Unexpected content type: {type(content)}")
 
     def _update_usage(self, response: Response) -> None:
         """Update the token counts and total cost for the message."""

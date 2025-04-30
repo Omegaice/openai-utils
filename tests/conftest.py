@@ -5,8 +5,6 @@ import pytest
 def remove_response_headers(headers):
     def before_record_response(response: dict[str, Any]):
         if "headers" in response:
-            print(response["headers"])
-            print(type(response["headers"]))
             response["headers"] = {name: value for name, value in response["headers"].items() if name not in headers}
         return response
 
