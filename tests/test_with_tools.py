@@ -1,7 +1,7 @@
 import httpx
-from pydantic import ConfigDict
 import pytest
 from openai import BaseModel, OpenAI
+from pydantic import ConfigDict
 
 from openai_utils.conversation import Conversation
 from openai_utils.models import Model
@@ -25,7 +25,7 @@ def test_with_tools():
         assert isinstance(result, str)
         assert (
             result
-            == "The current temperature in Paris is approximately 16.9°C. If you need more detailed weather information, feel free to ask!"
+            == "The weather in Paris today is approximately 28.2°C. Would you like to know more details, such as humidity or wind speed?"
         )
 
 
@@ -46,7 +46,7 @@ def test_with_tools_split_registry():
         assert isinstance(result, str)
         assert (
             result
-            == "The weather in Paris today is about 16°C. If you need more specific details like humidity or forecast, let me know!"
+            == "The weather in Paris today is around 28.2°C. If you need more details like humidity or precipitation, just let me know!"
         )
 
 
@@ -73,7 +73,7 @@ def test_with_tools_and_structured_output():
     with conversation:
         result = conversation.ask("What's the weather like in Paris today?", format=Weather)
         assert isinstance(result, Weather)
-        assert result.temperature == 16.9
+        assert result.temperature == 28.2
 
 
 def test_register_tool_without_argument_type_hints():

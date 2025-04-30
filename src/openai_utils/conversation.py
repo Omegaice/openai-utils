@@ -6,16 +6,15 @@ from types import TracebackType
 from typing import Self, cast
 
 from openai import NOT_GIVEN, NotGiven, OpenAI
-from openai.types.responses import Response
-from typing_extensions import TypeVar, overload
 from openai.types.responses import (
-    ResponseFunctionToolCall,
-    ResponseFunctionToolCallParam,
     ParsedResponseOutputMessage,
     ParsedResponseOutputText,
+    Response,
+    ResponseFunctionToolCall,
 )
-from openai.types.responses.response_input_param import ResponseInputItemParam
 from openai.types.responses.easy_input_message_param import EasyInputMessageParam
+from openai.types.responses.response_input_param import ResponseInputItemParam
+from typing_extensions import TypeVar, overload
 
 from openai_utils.models import Model
 from openai_utils.tool_registry import ToolRegistry
@@ -77,19 +76,24 @@ class Conversation(AbstractContextManager["Conversation"]):
 
     def ask(self, input_text: str, format: type[T] | NotGiven = NOT_GIVEN) -> T | None:
         """Send a new message to the conversation, supporting multi-turn tool-calling (no structured formatting)."""
-        input_messages: list[ResponseInputItemParam] = []
-        input_messages.append(EasyInputMessageParam(role="user", content=input_text))
+        input_message: ResponseInputItemParam = EasyInputMessageParam(role="user", content=input_text)
 
         while True:
             response = self.client.responses.parse(
                 model=self.model.value,
                 tools=self.tools.schema(),
                 text_format=format,
-                input=input_messages,
+                input=[input_message],
+                previous_response_id=self.previous_response_id,
             )
 
+            # Save the response ID for the next request
+            self.previous_response_id = response.id
+
+            # Update the usage
             self._update_usage(response)
 
+            # Early return if there is no output
             if response.output is None:
                 raise ValueError("No output from the model")
 
@@ -98,26 +102,16 @@ class Conversation(AbstractContextManager["Conversation"]):
 
             # Handle tool calls
             if isinstance(last_output, ResponseFunctionToolCall):
-                tool_call: ResponseFunctionToolCallParam = {
-                    "type": "function_call",
-                    "call_id": last_output.call_id,
-                    "name": last_output.name,
-                    "arguments": last_output.arguments,
-                }
-                input_messages.append(tool_call)
-
-                input_messages.append(self.tools[last_output.name](last_output.call_id, last_output.arguments))
+                input_message = self.tools[last_output.name](last_output.call_id, last_output.arguments)
 
             # Handle result
             if isinstance(last_output, ParsedResponseOutputMessage):
                 content = last_output.content[0]
-                if isinstance(content, ParsedResponseOutputText):
-                    if format is NOT_GIVEN:
-                        return cast(T, content.text)
-                    else:
-                        return cast(T, content.parsed)
-                else:
+                if not isinstance(content, ParsedResponseOutputText):
                     raise ValueError(f"Unexpected content type: {type(content)}")
+                if format is not NOT_GIVEN:
+                    return cast(T, content.parsed)
+                return cast(T, content.text)
 
     def _update_usage(self, response: Response) -> None:
         """Update the token counts and total cost for the message."""

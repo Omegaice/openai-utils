@@ -22,20 +22,20 @@ interactions:
   response:
     body:
       string: !!binary |
-        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
+        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
+        kEAAhTvtMDv8BQAA//8DAJcEaJFdCAAA
     headers:
       Connection:
       - keep-alive
@@ -44,7 +44,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 30 Apr 2025 01:24:57 GMT
+      - Wed, 30 Apr 2025 14:36:16 GMT
       Server:
       - cloudflare
       Transfer-Encoding:
@@ -54,7 +54,7 @@ interactions:
       alt-svc:
       - h3=":443"; ma=86400
       openai-processing-ms:
-      - '2750'
+      - '768'
       openai-version:
       - '2020-10-01'
       strict-transport-security:
@@ -80,32 +80,32 @@ interactions:
   response:
     body:
       string: !!binary |
-        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
-        2o5BOxHKUbllR3K/PN6/v/8AAAD//wMA2vevrw==
+        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
+        ZN3PevlNSN+/v38AAAD//wMAw+Cu+g==
     headers:
       Connection:
       - keep-alive
@@ -114,14 +114,14 @@ interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Wed, 30 Apr 2025 01:24:58 GMT
+      - Wed, 30 Apr 2025 14:36:17 GMT
       Transfer-Encoding:
       - chunked
     status:
       code: 200
       message: OK
 - request:
-    body: '{"input":[{"role":"user","content":"What''s the weather like in Paris today?"},{"type":"function_call","call_id":"call_IHULBpRqzJPeEwK2dix39jX3","name":"get_weather","arguments":"{\"latitude\":48.8566,\"longitude\":2.3522}"},{"call_id":"call_IHULBpRqzJPeEwK2dix39jX3","output":"16.9","type":"function_call_output"}],"model":"gpt-4o-mini","text":{"format":{"type":"json_schema","strict":true,"name":"Weather","schema":{"additionalProperties":false,"properties":{"temperature":{"title":"Temperature","type":"number"}},"required":["temperature"],"title":"Weather","type":"object"}}},"tools":[{"name":"get_weather","parameters":{"additionalProperties":false,"properties":{"latitude":{"title":"Latitude","type":"number"},"longitude":{"title":"Longitude","type":"number"}},"required":["latitude","longitude"],"type":"object"},"description":"Get
+    body: '{"input":[{"type":"function_call_output","call_id":"call_t4uVUD6FSgPFnVKPK24xdCa5","output":"28.2"}],"model":"gpt-4o-mini","previous_response_id":"resp_681235600ed88191a1a82c4f75e1203702aa8f59d2746d1f","text":{"format":{"type":"json_schema","strict":true,"name":"Weather","schema":{"additionalProperties":false,"properties":{"temperature":{"title":"Temperature","type":"number"}},"required":["temperature"],"title":"Weather","type":"object"}}},"tools":[{"name":"get_weather","parameters":{"additionalProperties":false,"properties":{"latitude":{"title":"Latitude","type":"number"},"longitude":{"title":"Longitude","type":"number"}},"required":["latitude","longitude"],"type":"object"},"description":"Get
       the weather for a given latitude and longitude","strict":true,"type":"function"}]}'
     headers:
       accept:
@@ -131,7 +131,7 @@ interactions:
       connection:
       - keep-alive
       content-length:
-      - '920'
+      - '785'
       content-type:
       - application/json
       host:
@@ -143,20 +143,20 @@ interactions:
   response:
     body:
       string: !!binary |
-        H4sIAAAAAAAAA6xVTW/bMAy951cIOjeFP9LEyR/YZYcdBuzQFgZjMYk6WfIkqh8o8t8Hy7EtJ2kx
-        DL0EMR9JkY9P1PuMMS4F3zBu0TXlskjT1RYhyzEp0nW6BVjg6i5PlpXIV2KdYFEs19t8UeSQZmnG
-        b9oEZvuEFfVJjHbY2SuLQChKaLF0tbhbr5bZugiYIyDv2pjK1I1CQtEFobXG8g3TXqlgkLr3KAUS
-        SOWmqCPrK5JGT+w1vJbGU+OpJPMbz0AjULVn7xuaL8y8llrOsyRbzJPVPC1OXYVovmH3M8YYew+/
-        A1212/dsVeku69haFkm6SLIkz0CkRXqVrZCD3hoMWdA52OMIfERLACujCfVYUlzWJG3fOL7SEB0c
-        QGtD0JN1/zgBg/uG8fcHTlg3aIG8xQe+SZe36yMfXI+nf0M0t0aFc8E56Qg0dc6tY3DiDVhQClVJ
-        xqiyAhWGSNZjB1t8lsa7stdPGUge5mURnNFS7/nm1DDH3c5Yipxa8nxdg307GWeMHTupoX2WFZYk
-        sRUWF7gDrzpmuCNjMa4lar1V7W1ysgZuTofvjK1h/I6Yf3JGl646YA3j3AS6ysqmpX1SMGNcQx3i
-        fiHQAW0khC7HJhowByFkmwTUD2satCSxpXEHyuE4Sd7E4FQfk95iqAUldVP8GXndnPmc2tS+3qLl
-        EXgc5RGVYvGPlxbFRLJnhQz2SI1jMefExCrv1s7s7FjuyMqwjtqZDkLstNDp72Bk1QnWk+ED4C4v
-        e3/WzuuwYz4aKv+GxOiA7KWrl+2MZcD28hk1U0CSvEAGWjBl9D588QsR7JHKl3MhtFenRkLrvlgM
-        fVWfKOF77/LvMphslLHXT8644OOLtaauNRGVdl1//6Wxx5OUmrKJd4f1uoJeKEI62Kr+tfNh/Q+L
-        RerJg5Vm6c0lED2Dg04rqA4oxshkFtXLzx/CNLsGXMs7bN6PUpMhUFHmPB/umnc4echrJBBAYakd
-        Z8e/AAAA//8DANPz+n58CAAA
+        H4sIAAAAAAAAA6yVwY7bOAyG73kKQedJYTtOnMkL7KWHHhbooS0MRqITdWXJK1HTFoO8e2E5tuUk
+        UxRFL4OJfoqifn6mXleMcSX5gXGHvqt3+7zYbHf5rsrLff6cP2fZrihFkW3LKt/sRFYA7Jvtsyyq
+        cifzhj/1CezxKwoak1jjcVgXDoFQ1tBreVXusmJTVVXUPAEF3+8Rtu00EsphEzpnHT8wE7SOC8qM
+        EbVEAqX9UvXkgiBlzWK9he+1DdQFqsn+hzeilaj7s08drUu7bpVR6yIrynVWrfP99VZxNz+wTyvG
+        GHuNfye7Wn+a3JKbrejd2lfZBpv8CFs8Nttt89CtmIN+dBizoPdwwll4y5YoCmsIzVxSWtYi7Xhx
+        /E7T7hgAxliC0axPXxZiDD8w/vqZE7YdOqDg8DM/FPt3xYVPoZfrf9Nu7qyO54L3yhMYGoL7wBjE
+        O3CgNeqarNW1AB2bSC7gIDt8UTb4euSnvmcyy1Due5chh30hyqbaYl5km+oxkw7BW6PMiR+uHnFs
+        Guso4aD3O7QtuB/XxRVjl4FOdC9KYE0Kexa5xAaCHszknqzDtPzErR70d9l1Ndp5PbyxroX5d9Ks
+        r96a2osztjC3WqIXTnV9pxYFM8YNtHHfRwQ6o0vYGXIcEiY4SKn6JKA/ONuhI4W98w1oj3PzeZeK
+        S6QWd0ulXlQ0NP7fJOrpJuZ6TRPaIzqeiJeZqKQUh/8H5VAuKL8pZFpPAJ6LuTUm/TCGSbW6OZZ7
+        cipOsL6nE7sDCwOyZ6vEwHggyyfB38+H8awmmDiW3moq/weJ0RnZt6Fe1ljHgJ3UCxqmgRQFiQyM
+        ZNqaU/zF7yA4IdXfbkHov7YWCZ3/yzCMVf2ChPdjyO9jsBhC811/ccadH3+ZNf3oEklpj/n7I8a+
+        XFHq6i6dHS4YASMoUnk46vGBDPHFmAaLMos3Li/Kp3sheTknTgWIM8p5Z7ZK6uW3b2dePBIe5Z0m
+        71upyRLoJPNmN31rwePi7W+RQALFoXZZXX4CAAD//wMAPSwQHa8IAAA=
     headers:
       Connection:
       - keep-alive
@@ -165,7 +165,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 30 Apr 2025 01:25:00 GMT
+      - Wed, 30 Apr 2025 14:36:18 GMT
       Server:
       - cloudflare
       Transfer-Encoding:
@@ -175,7 +175,7 @@ interactions:
       alt-svc:
       - h3=":443"; ma=86400
       openai-processing-ms:
-      - '2230'
+      - '683'
       openai-version:
       - '2020-10-01'
       strict-transport-security:
