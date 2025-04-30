@@ -1,0 +1,185 @@
+interactions:
+- request:
+    body: '{"input":[{"role":"user","content":"What''s the weather like in Paris today?"}],"model":"gpt-4o-mini","tools":[{"name":"get_weather","parameters":{"additionalProperties":false,"properties":{"latitude":{"title":"Latitude","type":"number"},"longitude":{"title":"Longitude","type":"number"}},"required":["latitude","longitude"],"type":"object"},"description":"Get
+      the weather for a given latitude and longitude","strict":true,"type":"function"}]}'
+    headers:
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-length:
+      - '442'
+      content-type:
+      - application/json
+      host:
+      - api.openai.com
+      user-agent:
+      - OpenAI/Python 1.75.0
+    method: POST
+    uri: https://api.openai.com/v1/responses
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA4RVTY/aMBC951dYPsOKQAiBW7WHSquV2lsP3Soy8SR417FTe0x3i/jvlR3yQZbd
+        ckAwbz7fvExOESFUcLoj1IBt8jSL42yVshVPkyzexvt1CmkR8wzYipfldhFDsuLlAtK0THm5oTOf
+        QO+focAuiVYWWnthgCHwnHks3iTr7SZbxlnALDJ01scUum4kIPA2CIzRhu6IclIGg1CdR84BmZD2
+        GrVoXIFCqyt7zV5z7bBxmKN+gQmoOUhfu2pwnuh5LZSYLxfLZL7YzOPsMlWIpjvyMyKEkFP47ukq
+        i56s/YZnnqxslSUQp560PS8TuElWSIFvDYQkToXO84JJOcAfcRNAZipXg8KAn56oZCjQcXiiuyS7
+        y9ZpOnuiUquqsy7vVuvl8jxk8MXydorwc3sU4qHE+5eHb/i8xfu/jz/qL1BWQ4Ridei3Asz/AMMD
+        GBqwc0TIr8BWwwyTEmSOWsswj28QjYMWNnAU2tm8U0jbQL8RA8xqJVRFdxemKZSlNjhy8sy4umbm
+        7WKMCDm3YgJzFAXkKMBLh3IomZNIL0rTBsa9INQNGIYumOO7xcX6ikPxUpuaDf9HOwt+/fBt/Xbm
+        gxZFcGEONe0B+15C0/0PTHOwhRFNMO4I/QpI8ADkQjoptSGMVOIIinSLJ0xx0i/886X1oF9XDQjG
+        jmb06uJc+OJMfje6AYMCvEfJpIXZ4NaMwSGckF6OE7sfWqAMDT12LrOJw4UV5ep9J7D2c55dlehn
+        /aTGOz7+XyS6UY4a+O2EAd4vcTrnB6311l+jZF3xy8GMJuWoRSPCIfVanTxgqJu8GevVOFWwTihc
+        WLaX3Q11llUDO1SoqzO4zmbv7aPbehoORXEAPgQuolG7dHpdl+tbwK28/cP+UWrUyOQAZqv+SXMW
+        rl4ONSDjDJlPf47O/wAAAP//AwB9ggS/0AYAAA==
+    headers:
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 30 Apr 2025 01:56:58 GMT
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      X-Content-Type-Options:
+      - nosniff
+      alt-svc:
+      - h3=":443"; ma=86400
+      openai-processing-ms:
+      - '693'
+      openai-version:
+      - '2020-10-01'
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+    status:
+      code: 200
+      message: OK
+- request:
+    body: ''
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      host:
+      - api.open-meteo.com
+      user-agent:
+      - python-httpx/0.28.1
+    method: GET
+    uri: https://api.open-meteo.com/v1/forecast?latitude=48.8566&longitude=2.3522&current=temperature_2m,wind_speed_10m&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m
+  response:
+    body:
+      string: !!binary |
+        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
+    headers:
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - deflate
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Wed, 30 Apr 2025 01:56:59 GMT
+      Transfer-Encoding:
+      - chunked
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"input":[{"role":"user","content":"What''s the weather like in Paris today?"},{"type":"function_call","call_id":"call_9viiJftCkJOtj9tCzLWmAefg","name":"get_weather","arguments":"{\"latitude\":48.8566,\"longitude\":2.3522}"},{"type":"function_call_output","call_id":"call_9viiJftCkJOtj9tCzLWmAefg","output":"16.0"}],"model":"gpt-4o-mini","tools":[{"name":"get_weather","parameters":{"additionalProperties":false,"properties":{"latitude":{"title":"Latitude","type":"number"},"longitude":{"title":"Longitude","type":"number"}},"required":["latitude","longitude"],"type":"object"},"description":"Get
+      the weather for a given latitude and longitude","strict":true,"type":"function"}]}'
+    headers:
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-length:
+      - '678'
+      content-type:
+      - application/json
+      host:
+      - api.openai.com
+      user-agent:
+      - OpenAI/Python 1.75.0
+    method: POST
+    uri: https://api.openai.com/v1/responses
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA4RVyY7bOBC9+ytqeG4HkuNF8nUOgwFyyCG3zEAoiSWbaYrUkMVOjMD/PhC1u7uT
+        i2HXq/XxVfnnBkAoKc4gHPm2OGZpmn08lpjWVZbmKVZJdjxQfchPUh6SKiGSicxLTNMjnagUT10C
+        W36jisck1njq7ZUjZJIFdlh62h/yU7ZL84h5Rg6+i6ls02pikn0QOWedOIMJWkeDMqNHIYlRab9G
+        PbtQsbJmZW/wR2EDt4ELts/0AFpJuqt9aXm7t9tGGbXdJbv9Njlt02yYKkaLM3zdAAD8jJ8TXY2/
+        TGzVu9O+Yyur04+YJ4es3NeU73ZvshVz8K2lmIW8xwvNwHu0RLCyhsnMLS3bWqUdB6cfPEVHBzTG
+        Mo5kff13BUb3M4gvV4LvhHwlB8rAZ3TKA1uJN1AesLSBIT3+E5KkTP78AH/XcLMBDJGExjoC31Kl
+        alXB8Fyg1TPBNTRKKr6BdVBbRxV6fgJNDA3Bs7Hf/xBTM/fh29SfcFbHydB75RkN986dY3QSLTrU
+        mnTB1uqiQh1lwi5QDzt6UTb4YlRoEZ9xUoQj9NYocxHngVJBdW0dL5y65wlNg+42GDcA917M5F5U
+        RQUr6qQrJNUYdM+98GwdLXthalpyyCGa0w/JYI3sD8Vr6xqcfy/eNvpNw/f1+5mvVlU9SYGtmAD/
+        WsJjrjqYuDmzxCT5yqk2Gs8g/iIGXsihtg4QLuqFDGhkxUESoJGgrbnEX3Mqg00sciEuhvgZ7J6r
+        ISbnFzN2ApVSdcVRf3a2JceKOo8atadZrKJdgqsVGLt6sHdDK+419Gl0eXpwGFgxoSnJiQV4X+3J
+        POsvarzi4/dFNm+UE47+C8qRXC39cs53Wpusix2f70N/sDcP5YRnp+Ih77T6sGBs26Jd6tUFU+Eo
+        FKk8lnq84SEetUnMyqzOcJ4+vbYvbvsk0wqrK8k5MNks2hWP132XvQW8lXda9vdSs2XUM5im+bRq
+        wdPq36khRomMXf775v4/AAAA//8DAPotfpVRBwAA
+    headers:
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 30 Apr 2025 01:57:00 GMT
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      X-Content-Type-Options:
+      - nosniff
+      alt-svc:
+      - h3=":443"; ma=86400
+      openai-processing-ms:
+      - '701'
+      openai-version:
+      - '2020-10-01'
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+    status:
+      code: 200
+      message: OK
+version: 1
