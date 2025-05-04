@@ -353,6 +353,7 @@ version = "0.1.0"
 source = { editable = "." }
 dependencies = [
     { name = "openai" },
+    { name = "pydantic" },
 ]
 
 [package.dev-dependencies]
@@ -378,7 +379,10 @@ test = [
 ]
 
 [package.metadata]
-requires-dist = [{ name = "openai", specifier = ">=1.75.0" }]
+requires-dist = [
+    { name = "openai", specifier = ">=1.75.0" },
+    { name = "pydantic", specifier = ">=2.11.3" },
+]
 
 [package.metadata.requires-dev]
 dev = [

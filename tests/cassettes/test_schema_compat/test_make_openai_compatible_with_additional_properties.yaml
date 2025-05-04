@@ -1,0 +1,76 @@
+interactions:
+- request:
+    body: '{"input":[{"role":"user","content":"What is your name?"}],"model":"gpt-4o-mini","text":{"format":{"type":"json_schema","strict":true,"name":"OpenAICompatibleUserWithAdditionalProperties","schema":{"additionalProperties":false,"description":"A
+      model that generates OpenAI-compatible JSON schemas.","properties":{"name":{"title":"Name","type":"string"}},"required":["name"],"title":"OpenAICompatibleUserWithAdditionalProperties","type":"object"}}},"tools":[]}'
+    headers:
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-length:
+      - '457'
+      content-type:
+      - application/json
+      host:
+      - api.openai.com
+      user-agent:
+      - OpenAI/Python 1.75.0
+    method: POST
+    uri: https://api.openai.com/v1/responses
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAAwAAAP//nFU9b9swEN39KwjOcWDJiiVrCzIU7ZAEaIsOTSGcxZPNlCJV8hQkCPzf
+        C1GWRLnO0sWw790X3707vy8Y41LwnHGLrik2WZRmaZasxSrLom2UbZN4lYlIiHQbb+BmVVViJdbx
+        poIYxTbjV10Cs3vGkoYkRjvs7aVFIBQFdFiUJpt1GidZ4jFHQK3rYkpTNwoJRR+E1hrLc6ZbpbxB
+        6sGjEEgglZujjmxbkjR6Zq/htTAtNS0VZH7jGWgEqq72vqFlYpa11HIZr+JkuUqX0fAqH81z9nPB
+        GGPv/nOkq3b7ka1tVSUdWxCVItrBzS6OMakgvciWz0FvDfos6BzscQI+osWDpdGEemopbGuWdng4
+        vtIY7R1Aa0MwkPXz1wz07jnj709cQ41PPH/idwegT4/fnviRj67H07cxmlujfF1wTjoCTb1z5+id
+        eAMWlEJVkDGqKEH5IZJtsYctvkjTumLQT+FJHudlEZzRUu95fnowx6oylgKnjry2rsG+nYwLxo69
+        1NC+yBILktgJiwusoFU9M9yRsRj2Qlg3aIFab46uVyer5+ZUvDK2hul3wPyzM7pw5QFrmOYm0JVW
+        Nh3ts4YZ80R3cQ8N6tvPd6ZugORO4XeH9oekw60QsosD9WhNg5YkukAtfaE8UAGHSxE5q0A5nMZ9
+        1hO/ZX4nGB2A2B51xwA61re1LMe+2JevD/esr+uuA3HxJqw2U+XpjaGtY0xSL5r7Dr46A090OrLd
+        1APwOMkwKG7xTystitlqDKVHQyD3qfx/MR/uWn/8FmdN+db9UeyUNa5Dr8h+Cw5Glv3atGT4CEyb
+        yck0RROq0La6hGFmQjrYqeFutv6QjBKVenb6Npurf+3BPR2FXEJ5QDEFrhbBs/j5RU0v2S+lHTf4
+        o8xkCFSQeD2S1Tqc/R/USCCAvOyPi+NfAAAA//8DACFwahnDBgAA
+    headers:
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 04 May 2025 15:28:04 GMT
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      X-Content-Type-Options:
+      - nosniff
+      alt-svc:
+      - h3=":443"; ma=86400
+      openai-processing-ms:
+      - '538'
+      openai-version:
+      - '2020-10-01'
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-ratelimit-limit-requests:
+      - '30000'
+      x-ratelimit-limit-tokens:
+      - '150000000'
+      x-ratelimit-remaining-requests:
+      - '29999'
+      x-ratelimit-remaining-tokens:
+      - '149999915'
+      x-ratelimit-reset-requests:
+      - 2ms
+      x-ratelimit-reset-tokens:
+      - 0s
+    status:
+      code: 200
+      message: OK
+version: 1
