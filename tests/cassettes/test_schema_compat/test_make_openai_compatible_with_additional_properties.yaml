@@ -1,7 +1,6 @@
 interactions:
 - request:
-    body: '{"input":[{"role":"user","content":"What is your name?"}],"model":"gpt-4o-mini","text":{"format":{"type":"json_schema","strict":true,"name":"OpenAICompatibleUserWithAdditionalProperties","schema":{"additionalProperties":false,"description":"A
-      model that generates OpenAI-compatible JSON schemas.","properties":{"name":{"title":"Name","type":"string"}},"required":["name"],"title":"OpenAICompatibleUserWithAdditionalProperties","type":"object"}}},"tools":[]}'
+    body: '{"input":[{"role":"user","content":"What is your name?"}],"model":"gpt-4o-mini","text":{"format":{"type":"json_schema","strict":true,"name":"OpenAICompatibleUserWithAdditionalProperties","schema":{"additionalProperties":false,"properties":{"name":{"title":"Name","type":"string"}},"required":["name"],"title":"OpenAICompatibleUserWithAdditionalProperties","type":"object"}}},"tools":[]}'
     headers:
       accept:
       - application/json
@@ -10,7 +9,7 @@ interactions:
       connection:
       - keep-alive
       content-length:
-      - '457'
+      - '386'
       content-type:
       - application/json
       host:
@@ -22,19 +21,19 @@ interactions:
   response:
     body:
       string: !!binary |
-        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
+        H4sIAAAAAAAAAwAAAP//nFQ9b9swEN39KwTOcSFZsmVrCzIUXdoMLTrEhXAWTzZTilTJY5Ag8H8v
+        RMkS5TpLF0O+d5/vHu99EUVMcFZEzKBty802yXewrmGdxttkl0C2y/ka03iNacbhEO+q3RY2abaK
+        Y55uM3bXJdCHZ6zokkQri729MgiEvIQOS/Jsk+Z5miQeswTkbBdT6aaVSMj7IDRGG1ZEyknpDUJd
+        PEqOBELaOWrJuIqEVjN7A6+ldtQ6Kkn/xitQc5Rd7WNLy0wvG6HEchWvsmWcL5PtMJWPZkX0tIii
+        KHr3vyNdjT0ObG3iOIGsY2ubpLukTlfrvE75poabbPkc9Naiz4LWwhEn4CNaPFhpRaimlsK2Zmkv
+        g+MrjdHeAZTSBBeynn7NQO9eROx9zxQ0uGfFnj2cgD4/ft+zMxtdz8PXGM2Mlr4uWCssgaLeuXP0
+        TqwFA1KiLElrWVYg/RLJOOxhgy9CO1te9FN6ksd9GQSrlVBHVgwDM6xrbShw6shzTQPmbTAuoujc
+        Sw3Ni6iwJIGdsBjHGpzsmWGWtMGwF8KmRQPkvDn5FA9Wz81QvNamgel/wPyz1aq01QkbmPbG0VZG
+        tB3ts4ajyBPdxX1rUd1/edBNCyQOEn9YND8Fne45F10cyEejWzQk0AZq6QsVgQoY3IooohqkxWnd
+        rA3BmYiGlkJbN6CgfsdfO/juChymt2S6JQXgeVJNUNzgHycM8pmSL6VHQ6DOqfx/ERU+jf5WLa6a
+        8q37G9YJYVRvL6BetCctql7ljjQbgekhMdJt2YaiMU5VMKydcWHhIC9nzvl3PypKqNmlWmd3/9qD
+        8zfqroLqhHwKjBfBWOz6AOa37LfSjg/uo8ykCeQEbpKRLGdxdr4bJOBAXqXnxfkvAAAA//8DAGuV
+        i+pyBgAA
     headers:
       Connection:
       - keep-alive
@@ -43,7 +42,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 04 May 2025 15:28:04 GMT
+      - Sun, 04 May 2025 16:48:32 GMT
       Server:
       - cloudflare
       Transfer-Encoding:
@@ -53,7 +52,7 @@ interactions:
       alt-svc:
       - h3=":443"; ma=86400
       openai-processing-ms:
-      - '538'
+      - '501'
       openai-version:
       - '2020-10-01'
       strict-transport-security:
@@ -65,7 +64,7 @@ interactions:
       x-ratelimit-remaining-requests:
       - '29999'
       x-ratelimit-remaining-tokens:
-      - '149999915'
+      - '149999926'
       x-ratelimit-reset-requests:
       - 2ms
       x-ratelimit-reset-tokens:

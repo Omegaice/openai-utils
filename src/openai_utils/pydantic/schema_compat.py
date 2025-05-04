@@ -1,21 +1,24 @@
-from typing import Any, get_type_hints, get_origin, get_args
+from typing import Any, get_type_hints, get_origin, get_args, TypeVar, cast
 
-from pydantic import BaseModel, ConfigDict, RootModel, create_model
+from pydantic import BaseModel, ConfigDict, RootModel
+
+T = TypeVar("T", bound=BaseModel)
 
 
-def make_openai_compatible(model: type[BaseModel]) -> type[BaseModel]:
+def make_openai_compatible(model: type[T]) -> type[T]:
     """Make a Pydantic model compatible with OpenAI's structured output schema.
 
-    This function creates a new model class using create_model() with:
-    - The same fields as the original model
-    - model_config with extra="forbid" to ensure additionalProperties: false
-    - Recursively applied to nested models
+    This function creates a new model class that:
+    - Has the same fields as the original model
+    - Sets model_config with extra="forbid" to ensure additionalProperties: false
+    - Applies this recursively to nested models
 
     Args:
         model: The Pydantic model to make compatible
 
     Returns:
-        A new Pydantic model class that generates OpenAI-compatible schemas
+        A new Pydantic model class that is compatible with OpenAI's schema
+        and preserves the type information of the original model
 
     Raises:
         ValueError: If the model cannot be made compatible with OpenAI's restrictions
@@ -38,13 +41,13 @@ def make_openai_compatible(model: type[BaseModel]) -> type[BaseModel]:
                     "The root level schema must be an object, not anyOf/Union."
                 )
 
-        # Get field definitions for create_model
-        field_definitions: dict[str, Any] = {}
-
-        # Get type hints to get field types
+        # Get type hints for field types
         hints = get_type_hints(model_cls)
 
         # Get field values from model's defaults
+        field_definitions = {}
+        annotations = {}
+
         for name, field in model_cls.model_fields.items():
             # Skip private fields
             if name.startswith("_"):
@@ -53,27 +56,28 @@ def make_openai_compatible(model: type[BaseModel]) -> type[BaseModel]:
             # Get the field type (process nested models)
             field_type = hints.get(name)
             processed_type = process_field_type(field_type)
+            annotations[name] = processed_type
 
-            # Add the field definition with its type and default if any
-            if field.is_required():
-                # No default value
-                field_definitions[name] = processed_type
-            else:
-                # Has a default value
-                field_definitions[name] = (processed_type, field.get_default())
+            # Add the field definition with its default if any
+            if not field.is_required():
+                field_definitions[name] = field.get_default()
 
-        # Create a new model with default fields plus forbidding extra fields
-        new_model = create_model(
-            f"OpenAICompatible{model_cls.__name__}",
-            __base__=None,  # Don't inherit from original to avoid field conflicts
-            __module__=model_cls.__module__,
-            __config__=ConfigDict(extra="forbid"),
+        # Create the new model class with explicit class definition
+        class_dict = {
+            "__annotations__": annotations,
+            "model_config": ConfigDict(extra="forbid"),
             **field_definitions,
-        )
+        }
 
-        # Add docstring
+        # Create the class
+        new_model = type(f"OpenAICompatible{model_cls.__name__}", (BaseModel,), class_dict)
+
+        # Set the docstring
         if model_cls.__doc__:
             new_model.__doc__ = f"OpenAI-compatible version of {model_cls.__name__}.\n\n{model_cls.__doc__}"
+
+        # Set the module to match the original
+        new_model.__module__ = model_cls.__module__
 
         # Cache the processed model
         processed_models[model_cls] = new_model
@@ -98,5 +102,6 @@ def make_openai_compatible(model: type[BaseModel]) -> type[BaseModel]:
         # Return unchanged for non-model types
         return field_type
 
-    # Process the model
-    return process_model(model)
+    # Process the model and cast the result to preserve IDE type information
+    result = process_model(model)
+    return cast(type[T], result)
