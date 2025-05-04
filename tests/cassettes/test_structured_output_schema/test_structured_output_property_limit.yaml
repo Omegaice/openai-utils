@@ -1,0 +1,102 @@
+interactions:
+- request:
+    body: '{"input":[{"role":"user","content":"Give me data for this model"}],"model":"gpt-4o-mini","text":{"format":{"type":"json_schema","strict":true,"name":"TooManyPropsModel","schema":{"additionalProperties":false,"properties":{"field_1":{"title":"Field
+      1","type":"string"},"field_2":{"title":"Field 2","type":"string"},"field_3":{"title":"Field
+      3","type":"string"},"field_4":{"title":"Field 4","type":"string"},"field_5":{"title":"Field
+      5","type":"string"},"field_6":{"title":"Field 6","type":"string"},"field_7":{"title":"Field
+      7","type":"string"},"field_8":{"title":"Field 8","type":"string"},"field_9":{"title":"Field
+      9","type":"string"},"field_10":{"title":"Field 10","type":"string"},"field_11":{"title":"Field
+      11","type":"string"},"field_12":{"title":"Field 12","type":"string"},"field_13":{"title":"Field
+      13","type":"string"},"field_14":{"title":"Field 14","type":"string"},"field_15":{"title":"Field
+      15","type":"string"},"field_16":{"title":"Field 16","type":"string"},"field_17":{"title":"Field
+      17","type":"string"},"field_18":{"title":"Field 18","type":"string"},"field_19":{"title":"Field
+      19","type":"string"},"field_20":{"title":"Field 20","type":"string"},"field_21":{"title":"Field
+      21","type":"string"},"field_22":{"title":"Field 22","type":"string"},"field_23":{"title":"Field
+      23","type":"string"},"field_24":{"title":"Field 24","type":"string"},"field_25":{"title":"Field
+      25","type":"string"},"field_26":{"title":"Field 26","type":"string"},"field_27":{"title":"Field
+      27","type":"string"},"field_28":{"title":"Field 28","type":"string"},"field_29":{"title":"Field
+      29","type":"string"},"field_30":{"title":"Field 30","type":"string"},"field_31":{"title":"Field
+      31","type":"string"},"field_32":{"title":"Field 32","type":"string"},"field_33":{"title":"Field
+      33","type":"string"},"field_34":{"title":"Field 34","type":"string"},"field_35":{"title":"Field
+      35","type":"string"},"field_36":{"title":"Field 36","type":"string"},"field_37":{"title":"Field
+      37","type":"string"},"field_38":{"title":"Field 38","type":"string"},"field_39":{"title":"Field
+      39","type":"string"},"field_40":{"title":"Field 40","type":"string"},"field_41":{"title":"Field
+      41","type":"string"},"field_42":{"title":"Field 42","type":"string"},"field_43":{"title":"Field
+      43","type":"string"},"field_44":{"title":"Field 44","type":"string"},"field_45":{"title":"Field
+      45","type":"string"},"field_46":{"title":"Field 46","type":"string"},"field_47":{"title":"Field
+      47","type":"string"},"field_48":{"title":"Field 48","type":"string"},"field_49":{"title":"Field
+      49","type":"string"},"field_50":{"title":"Field 50","type":"string"},"field_51":{"title":"Field
+      51","type":"string"},"field_52":{"title":"Field 52","type":"string"},"field_53":{"title":"Field
+      53","type":"string"},"field_54":{"title":"Field 54","type":"string"},"field_55":{"title":"Field
+      55","type":"string"},"field_56":{"title":"Field 56","type":"string"},"field_57":{"title":"Field
+      57","type":"string"},"field_58":{"title":"Field 58","type":"string"},"field_59":{"title":"Field
+      59","type":"string"},"field_60":{"title":"Field 60","type":"string"},"field_61":{"title":"Field
+      61","type":"string"},"field_62":{"title":"Field 62","type":"string"},"field_63":{"title":"Field
+      63","type":"string"},"field_64":{"title":"Field 64","type":"string"},"field_65":{"title":"Field
+      65","type":"string"},"field_66":{"title":"Field 66","type":"string"},"field_67":{"title":"Field
+      67","type":"string"},"field_68":{"title":"Field 68","type":"string"},"field_69":{"title":"Field
+      69","type":"string"},"field_70":{"title":"Field 70","type":"string"},"field_71":{"title":"Field
+      71","type":"string"},"field_72":{"title":"Field 72","type":"string"},"field_73":{"title":"Field
+      73","type":"string"},"field_74":{"title":"Field 74","type":"string"},"field_75":{"title":"Field
+      75","type":"string"},"field_76":{"title":"Field 76","type":"string"},"field_77":{"title":"Field
+      77","type":"string"},"field_78":{"title":"Field 78","type":"string"},"field_79":{"title":"Field
+      79","type":"string"},"field_80":{"title":"Field 80","type":"string"},"field_81":{"title":"Field
+      81","type":"string"},"field_82":{"title":"Field 82","type":"string"},"field_83":{"title":"Field
+      83","type":"string"},"field_84":{"title":"Field 84","type":"string"},"field_85":{"title":"Field
+      85","type":"string"},"field_86":{"title":"Field 86","type":"string"},"field_87":{"title":"Field
+      87","type":"string"},"field_88":{"title":"Field 88","type":"string"},"field_89":{"title":"Field
+      89","type":"string"},"field_90":{"title":"Field 90","type":"string"},"field_91":{"title":"Field
+      91","type":"string"},"field_92":{"title":"Field 92","type":"string"},"field_93":{"title":"Field
+      93","type":"string"},"field_94":{"title":"Field 94","type":"string"},"field_95":{"title":"Field
+      95","type":"string"},"field_96":{"title":"Field 96","type":"string"},"field_97":{"title":"Field
+      97","type":"string"},"field_98":{"title":"Field 98","type":"string"},"field_99":{"title":"Field
+      99","type":"string"},"field_100":{"title":"Field 100","type":"string"},"field_101":{"title":"Field
+      101","type":"string"}},"required":["field_1","field_2","field_3","field_4","field_5","field_6","field_7","field_8","field_9","field_10","field_11","field_12","field_13","field_14","field_15","field_16","field_17","field_18","field_19","field_20","field_21","field_22","field_23","field_24","field_25","field_26","field_27","field_28","field_29","field_30","field_31","field_32","field_33","field_34","field_35","field_36","field_37","field_38","field_39","field_40","field_41","field_42","field_43","field_44","field_45","field_46","field_47","field_48","field_49","field_50","field_51","field_52","field_53","field_54","field_55","field_56","field_57","field_58","field_59","field_60","field_61","field_62","field_63","field_64","field_65","field_66","field_67","field_68","field_69","field_70","field_71","field_72","field_73","field_74","field_75","field_76","field_77","field_78","field_79","field_80","field_81","field_82","field_83","field_84","field_85","field_86","field_87","field_88","field_89","field_90","field_91","field_92","field_93","field_94","field_95","field_96","field_97","field_98","field_99","field_100","field_101"],"title":"TooManyPropsModel","type":"object"}}},"tools":[]}'
+    headers:
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-length:
+      - '6232'
+      content-type:
+      - application/json
+      host:
+      - api.openai.com
+      user-agent:
+      - OpenAI/Python 1.75.0
+    method: POST
+    uri: https://api.openai.com/v1/responses
+  response:
+    body:
+      string: "{\n  \"error\": {\n    \"message\": \"Invalid schema for response_format
+        'TooManyPropsModel': 101 parameters exceeds limit of 100.\",\n    \"type\":
+        \"invalid_request_error\",\n    \"param\": \"text.format.schema\",\n    \"code\":
+        \"invalid_json_schema\"\n  }\n}"
+    headers:
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '237'
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 04 May 2025 04:08:45 GMT
+      Server:
+      - cloudflare
+      X-Content-Type-Options:
+      - nosniff
+      alt-svc:
+      - h3=":443"; ma=86400
+      openai-processing-ms:
+      - '82'
+      openai-version:
+      - '2020-10-01'
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+    status:
+      code: 400
+      message: Bad Request
+version: 1

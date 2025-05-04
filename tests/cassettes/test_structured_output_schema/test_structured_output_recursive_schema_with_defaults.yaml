@@ -1,0 +1,52 @@
+interactions:
+- request:
+    body: '{"input":[{"role":"user","content":"Create a simple tree with one parent
+      and two children"}],"model":"gpt-4o-mini","text":{"format":{"type":"json_schema","strict":true,"name":"InvalidTreeNode","schema":{"$defs":{"InvalidTreeNode":{"additionalProperties":false,"properties":{"name":{"title":"Name","type":"string"},"children":{"default":[],"items":{"$ref":"#/$defs/InvalidTreeNode"},"title":"Children","type":"array"}},"required":["name","children"],"title":"InvalidTreeNode","type":"object"}},"additionalProperties":false,"properties":{"name":{"title":"Name","type":"string"},"children":{"default":[],"items":{"$ref":"#/$defs/InvalidTreeNode"},"title":"Children","type":"array"}},"required":["name","children"],"title":"InvalidTreeNode","type":"object"}}},"tools":[]}'
+    headers:
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-length:
+      - '767'
+      content-type:
+      - application/json
+      host:
+      - api.openai.com
+      user-agent:
+      - OpenAI/Python 1.75.0
+    method: POST
+    uri: https://api.openai.com/v1/responses
+  response:
+    body:
+      string: "{\n  \"error\": {\n    \"message\": \"Invalid schema for response_format
+        'InvalidTreeNode': In context=('properties', 'children'), 'default' is not
+        permitted.\",\n    \"type\": \"invalid_request_error\",\n    \"param\": \"text.format.schema\",\n
+        \   \"code\": \"invalid_json_schema\"\n  }\n}"
+    headers:
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '265'
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 04 May 2025 04:08:47 GMT
+      Server:
+      - cloudflare
+      X-Content-Type-Options:
+      - nosniff
+      alt-svc:
+      - h3=":443"; ma=86400
+      openai-processing-ms:
+      - '25'
+      openai-version:
+      - '2020-10-01'
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+    status:
+      code: 400
+      message: Bad Request
+version: 1

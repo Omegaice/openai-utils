@@ -1,0 +1,78 @@
+interactions:
+- request:
+    body: '{"input":[{"role":"user","content":"Create a simple tree with one parent
+      and two children"}],"model":"gpt-4o-mini","text":{"format":{"type":"json_schema","strict":true,"name":"TreeNode","schema":{"$defs":{"TreeNode":{"additionalProperties":false,"properties":{"name":{"title":"Name","type":"string"},"children":{"items":{"$ref":"#/$defs/TreeNode"},"title":"Children","type":"array"}},"required":["name","children"],"title":"TreeNode","type":"object"}},"additionalProperties":false,"properties":{"name":{"title":"Name","type":"string"},"children":{"items":{"$ref":"#/$defs/TreeNode"},"title":"Children","type":"array"}},"required":["name","children"],"title":"TreeNode","type":"object"}}},"tools":[]}'
+    headers:
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-length:
+      - '699'
+      content-type:
+      - application/json
+      host:
+      - api.openai.com
+      user-agent:
+      - OpenAI/Python 1.75.0
+    method: POST
+    uri: https://api.openai.com/v1/responses
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA4xWTW/bMAy951cY2o7JGjufzbX3oofdmsJgJLpVJ0ueRBcrCv/3QXLiyIkd9BI4
+        5CNFPj5Q+pokCZOC7RJm0VX5epuucbsUhzUst+l9Cov0wBcFFGJRrLI5n6+26ZyvV/x+cyjS+4xN
+        fQJzeEdOpyRGO2zt3CIQihy8L90s14tFuslWwecIqHY+hpuyUkgo2iC01li2S3StVDBIfULkAgmk
+        cn2vI1tzkkb37CX8y01NVU05mT944TQClT/7taLZ0sxKqeUsm2fL2XwzS7fHrkI02yXPkyRJkq/w
+        29FVutcTW5huti1bgBlfF/cc+Dwr1jDIVshBnxWGLOgcvOLZMUZLcHKjCfW5pLisXtpT4/iPuugA
+        AK0NwYms55eeM8B3CfvaMw0l7tluz57AoqY9m+4Zf5NKWNR7tnuOIQ/enqRXmJdmeg3LBmAvDevK
+        aI5fXWXMGhV6AuekI9DUgj0wgFgFFpRClZMxKueggkDI1ti6LX5IU7v8pM08DLDTgkVwRkv9ynZH
+        MhkWhbEUgfxg6rIE+3k0TpKkaWWM9kNyzEmiFy0TWECtWtaZI2MxroWwrNAC1cGc/pofrYH34+GF
+        sSWc/0dTfXdG546/YQlnTQh03MrKj7RXcJIE6n3cb4v4aESssjbJLlIP+ymwcD1TEoX27V5JQkh/
+        KKgnayq0JNFHF6AcTvvQKgb005yrvLT7viW1o3/0kOkA4EiMI+vndwFoLiM62Q0fJwlLN+jy7Fgs
+        /FE/7gJPdx0xV+BmeqOTh1MFN7oBa+HzqpnJjTOYxb+1tCh6myHmd5yKnuPlIm9X95WELhdOewNM
+        hgqOiv2masYVM6yWm0q5oZIejePqGFXGN1XRjLE6ooZxJQyTOjL968kPTD2a+M1pj0y6iS4uK8Mb
+        wC+7bkO3S7JdzG9G8ratmgzrHOeLiJGp8ipejLbWHI6rjQnp4KBOz4Q63Jvd1pS6d9On2Xp67Yje
+        D91y5cDfUJwj55OoL3b5gsi2Q46hvN21MpaaDIGKKl4tO75qh70XUIkEAigs7GbS/AcAAP//AwDF
+        yPXFtQkAAA==
+    headers:
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 04 May 2025 04:08:46 GMT
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      X-Content-Type-Options:
+      - nosniff
+      alt-svc:
+      - h3=":443"; ma=86400
+      openai-processing-ms:
+      - '1164'
+      openai-version:
+      - '2020-10-01'
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+      x-ratelimit-limit-requests:
+      - '30000'
+      x-ratelimit-limit-tokens:
+      - '150000000'
+      x-ratelimit-remaining-requests:
+      - '29999'
+      x-ratelimit-remaining-tokens:
+      - '149999855'
+      x-ratelimit-reset-requests:
+      - 2ms
+      x-ratelimit-reset-tokens:
+      - 0s
+    status:
+      code: 200
+      message: OK
+version: 1

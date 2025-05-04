@@ -1,0 +1,52 @@
+interactions:
+- request:
+    body: '{"input":[{"role":"user","content":"Give me deeply nested data"}],"model":"gpt-4o-mini","text":{"format":{"type":"json_schema","strict":true,"name":"DeepNestedModel","schema":{"additionalProperties":false,"properties":{"top_level":{"title":"Top
+      Level","type":"string"},"nested":{"type":"object","additionalProperties":false,"properties":{"level1_field":{"type":"string"},"level2":{"type":"object","additionalProperties":false,"properties":{"level2_field":{"type":"string"},"level3":{"type":"object","additionalProperties":false,"properties":{"level3_field":{"type":"string"},"level4":{"type":"object","additionalProperties":false,"properties":{"level4_field":{"type":"string"},"level5":{"type":"object","additionalProperties":false,"properties":{"level5_field":{"type":"string"},"level6":{"type":"object","additionalProperties":false,"properties":{"level6_field":{"type":"string"}},"required":["level6_field"]}},"required":["level5_field","level6"]}},"required":["level4_field","level5"]}},"required":["level3_field","level4"]}},"required":["level2_field","level3"]}},"required":["level1_field","level2"]}},"required":["top_level","nested"],"title":"DeepNestedModel","type":"object"}}},"tools":[]}'
+    headers:
+      accept:
+      - application/json
+      accept-encoding:
+      - gzip, deflate
+      connection:
+      - keep-alive
+      content-length:
+      - '1197'
+      content-type:
+      - application/json
+      host:
+      - api.openai.com
+      user-agent:
+      - OpenAI/Python 1.75.0
+    method: POST
+    uri: https://api.openai.com/v1/responses
+  response:
+    body:
+      string: "{\n  \"error\": {\n    \"message\": \"Invalid schema for response_format
+        'DeepNestedModel': 7 levels of nesting exceeds limit of 5.\",\n    \"type\":
+        \"invalid_request_error\",\n    \"param\": \"text.format.schema\",\n    \"code\":
+        \"invalid_json_schema\"\n  }\n}"
+    headers:
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '238'
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 04 May 2025 04:08:45 GMT
+      Server:
+      - cloudflare
+      X-Content-Type-Options:
+      - nosniff
+      alt-svc:
+      - h3=":443"; ma=86400
+      openai-processing-ms:
+      - '26'
+      openai-version:
+      - '2020-10-01'
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains; preload
+    status:
+      code: 400
+      message: Bad Request
+version: 1
