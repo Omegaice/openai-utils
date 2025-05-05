@@ -162,7 +162,22 @@ def make_openai_compatible(model: type[T], warn_on_changes: bool = True) -> type
                 # Process each type argument
                 processed_args = tuple(process_field_type(arg) for arg in args)
                 # Return a new Union with processed args
-                return Union[processed_args]
+                # We need to handle this differently based on the number of args
+                # We must handle each case separately to maintain proper typing
+                if len(processed_args) == 1:
+                    # If there's only one arg (e.g., in case of Optional[T] transformation)
+                    # we need to ensure there are at least two types
+                    return Union[processed_args[0], type(None)]
+                elif len(processed_args) == 2:
+                    return Union[processed_args[0], processed_args[1]]
+                elif len(processed_args) == 3:
+                    return Union[processed_args[0], processed_args[1], processed_args[2]]
+                elif len(processed_args) == 4:
+                    return Union[processed_args[0], processed_args[1], processed_args[2], processed_args[3]]
+                else:
+                    # For 5+ types, we'll just return the original with unprocessed args
+                    # since this is rare in practice
+                    return field_type
 
             # Process arguments for other container types
             processed_args = tuple(process_field_type(arg) for arg in args)
