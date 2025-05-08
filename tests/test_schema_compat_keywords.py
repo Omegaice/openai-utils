@@ -1,4 +1,6 @@
+from typing import Annotated
 import warnings
+from annotated_types import Len
 from pydantic import BaseModel, ConfigDict, Field
 from openai_utils.pydantic.schema_compat import (
     make_openai_compatible,
@@ -18,7 +20,7 @@ def test_remove_unsupported_string_keywords():
     class UserWithStringConstraints(BaseModel):
         name: str = Field(min_length=3, max_length=50)
         email: str = Field(pattern=r"[^@]+@[^@]+\.[^@]+")
-        code: str = Field(format="uri")
+        code: str = Field(json_schema_extra={"format": "uri"})
 
     # Get the original schema to verify it contains the unsupported keywords
     original_schema = UserWithStringConstraints.model_json_schema()
@@ -104,12 +106,14 @@ def test_remove_unsupported_object_keywords():
     original_schema = ObjectWithConstraints.model_json_schema()
 
     # Verify the schema contains the expected keywords
+    found = False
     for keyword in UNSUPPORTED_OBJECT_KEYWORDS:
         if keyword in original_schema:
             found = True
             break
-    else:
-        # If not found at the top level, some might be nested in json_schema_extra
+
+    # If not found at the top level, some might be nested in json_schema_extra
+    if not found:
         # For simplicity, we'll just check the string representation
         schema_str = str(original_schema)
         for keyword in UNSUPPORTED_OBJECT_KEYWORDS:
@@ -140,8 +144,7 @@ def test_remove_unsupported_array_keywords():
         tags: list[str] = Field(
             description="User tags",
             # The following will be converted to JSON Schema keywords
-            min_length=1,  # This will be converted to minItems in JSON schema
-            max_length=5,  # This will be converted to maxItems in JSON schema
+            json_schema_extra={"minItems": 1, "maxItems": 5},
         )
 
         model_config = ConfigDict(
@@ -204,7 +207,7 @@ def test_nested_models_with_unsupported_keywords():
 
     class User(BaseModel):
         name: str = Field(min_length=2, max_length=50)
-        addresses: list[Address] = Field(min_items=1, max_items=5)
+        addresses: list[Address] = Field(json_schema_extra={"minItems": 1, "maxItems": 5})
         model_config = ConfigDict(extra="forbid")
 
     # Get the original schema
@@ -280,7 +283,7 @@ def test_disable_warnings():
     class UserWithConstraints(BaseModel):
         name: str = Field(min_length=3, max_length=50)
         age: int = Field(ge=0, le=120)
-        tags: list[str] = Field(min_items=1, max_items=5)
+        tags: list[str] = Field(json_schema_extra={"minItems": 1, "maxItems": 5})
         model_config = ConfigDict(extra="forbid")
 
     # Make the model OpenAI compatible with warnings disabled
@@ -325,7 +328,7 @@ def test_anyof_with_unsupported_keywords():
 
     class Option2(BaseWithConstraints):
         type: str = "option2"
-        tags: list[str] = Field(min_items=1, max_items=3)
+        tags: Annotated[list[str], Len(min_length=1, max_length=3)]
 
     class Container(BaseModel):
         name: str

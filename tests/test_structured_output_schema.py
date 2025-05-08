@@ -1,8 +1,14 @@
 from openai import BadRequestError, OpenAI
 from pydantic import BaseModel, ConfigDict, Field, RootModel
+from pydantic.json_schema import GenerateJsonSchema
+from typing import Any
+from pydantic.json_schema import JsonSchemaMode
 import pytest
 from openai_utils.conversation import Conversation
 from openai_utils.models import Model
+
+# Constants for model_json_schema method
+DEFAULT_REF_TEMPLATE = "#/$defs/{model}"
 
 
 @pytest.mark.vcr
@@ -265,8 +271,16 @@ def test_structured_output_deep_nesting():
         model_config = ConfigDict(extra="forbid")
 
         @classmethod
-        def model_json_schema(cls, **kwargs):
-            schema = super().model_json_schema(**kwargs)
+        def model_json_schema(
+            cls,
+            by_alias: bool = True,
+            ref_template: str = DEFAULT_REF_TEMPLATE,
+            schema_generator: type[GenerateJsonSchema] = GenerateJsonSchema,
+            mode: JsonSchemaMode = "validation",
+        ) -> dict[str, Any]:
+            schema = super().model_json_schema(
+                by_alias=by_alias, ref_template=ref_template, schema_generator=schema_generator, mode=mode
+            )
 
             # Create a deeply nested schema with more than 5 levels
             # Level 1
@@ -566,8 +580,16 @@ def test_structured_output_enum_limits():
         model_config = ConfigDict(extra="forbid")
 
         @classmethod
-        def model_json_schema(cls, **kwargs):
-            schema = super().model_json_schema(**kwargs)
+        def model_json_schema(
+            cls,
+            by_alias: bool = True,
+            ref_template: str = DEFAULT_REF_TEMPLATE,
+            schema_generator: type[GenerateJsonSchema] = GenerateJsonSchema,
+            mode: JsonSchemaMode = "validation",
+        ) -> dict[str, Any]:
+            schema = super().model_json_schema(
+                by_alias=by_alias, ref_template=ref_template, schema_generator=schema_generator, mode=mode
+            )
             # Inject large enum directly into schema
             schema["properties"]["category"]["enum"] = list(enum_values.values())
             return schema
@@ -611,8 +633,16 @@ def test_structured_output_total_string_size():
         model_config = ConfigDict(extra="forbid")
 
         @classmethod
-        def model_json_schema(cls, **kwargs):
-            schema = super().model_json_schema(**kwargs)
+        def model_json_schema(
+            cls,
+            by_alias: bool = True,
+            ref_template: str = DEFAULT_REF_TEMPLATE,
+            schema_generator: type[GenerateJsonSchema] = GenerateJsonSchema,
+            mode: JsonSchemaMode = "validation",
+        ) -> dict[str, Any]:
+            schema = super().model_json_schema(
+                by_alias=by_alias, ref_template=ref_template, schema_generator=schema_generator, mode=mode
+            )
 
             # Create many enum values to exceed the 15,000 character limit
             # Each value has 150 characters, and we'll create 120 of them,
